@@ -4,6 +4,7 @@ from Gaudi.Configuration import *
 from Configurables import LcioEvent, EventDataSvc, MarlinProcessorWrapper
 from k4MarlinWrapper.parseConstants import *
 
+import glob
 import os
 
 from k4FWCore.parseArgs import parser
@@ -17,6 +18,9 @@ parser.add_argument("--data", type=str, default="/dataMuC", help="Top-level dire
 parser.add_argument("--compressionLevel", type=int, default=None, help="Set compression level of output")
 parser.add_argument("--skipReco", action="store_true", default=False, help="Skip reconstruction")
 parser.add_argument("--skipTrackerConing", action="store_true", default=False, help="Skip tracker coning")
+parser.add_argument("--inputFile", type=str, default="", help="Input file, if set ignores the automatic path lookup in `--data`")
+parser.add_argument("--outputFile", type=str, default="", help="Output file, if set ignores the automatic output path generation in `--data`")
+parser.add_argument("--useLocalThresholds", action="store_true", default=False, help="Read MyBIBUtils thresholds files from code directory, rather than from the container")
 the_args = parser.parse_args()
 
 Coned = "" if the_args.skipTrackerConing else "Coned"
@@ -31,7 +35,10 @@ parseConstants(CONSTANTS)
 
 read = LcioEvent()
 read.OutputLevel = INFO
-read.Files = [f"{the_args.data}/sim/{the_args.TypeEvent}/{the_args.TypeEvent}_sim_{the_args.InFileName}.slcio"]
+if the_args.inputFile == "":
+    read.Files = [f"{the_args.data}/sim/{the_args.TypeEvent}/{the_args.TypeEvent}_sim_{the_args.InFileName}.slcio"]
+else:
+    read.Files = [the_args.inputFile]
 algList.append(read)
 
 EventNumber = MarlinProcessorWrapper("EventNumber")
@@ -58,7 +65,7 @@ if not the_args.enableBIB:
         "DropCollectionNames": [],
         "FullSubsetCollections": [],
         "KeepCollectionNames": ["MCParticle_SiTracks", "MCParticle_SelectedTracks"],
-        "LCIOOutputFile": [f"{the_args.data}/reco/{the_args.TypeEvent}/{the_args.TypeEvent}_reco_{the_args.InFileName}.slcio"],
+        "LCIOOutputFile": [the_args.outputFile if the_args.outputFile != "" else f"{the_args.data}/reco/{the_args.TypeEvent}/{the_args.TypeEvent}_reco_{the_args.InFileName}.slcio"],
         "LCIOWriteMode": ["WRITE_NEW"]
     }
 else:
@@ -103,9 +110,10 @@ else:
             "SiTracks", "SelectedTracks",
             "MCParticle_SiTracks", "MCParticle_SelectedTracks"
         ],
-        "LCIOOutputFile": [f"{the_args.data}/recoBIB/{the_args.TypeEvent}/{the_args.TypeEvent}_reco_{the_args.InFileName}.slcio"],
+        "LCIOOutputFile": [the_args.outputFile if the_args.outputFile != "" else f"{the_args.data}/recoBIB/{the_args.TypeEvent}/{the_args.TypeEvent}_reco_{the_args.InFileName}.slcio"],
         "LCIOWriteMode": ["WRITE_NEW"]
     }
+
 if the_args.compressionLevel is not None:
     Output_REC.Parameters["CompressionLevel"] = [str(the_args.compressionLevel)]
 
@@ -641,6 +649,21 @@ MyHcalEndcapConer.Parameters = {
     "ConeWidth": ["0.6"]
 }
 
+def findCaloThresholds(filename, codedir, use_code=False):
+    """ Helper function. Attempts to find the threshold files in the spack directory
+        containing both DD4HEP and MUCOLL_STACK (based on those environment variables).
+        If this fails for whatever reason, OR if requested by the user, these files are loaded from
+        a checkout of the MyBIBUtils package in the code directory."""
+    if use_code:
+        return os.path.join(codedir, filename)
+    else:
+        spack_root = os.path.commonpath([os.getenv("DD4HEP", ""), os.getenv("MUCOLL_STACK", "")])
+        try:
+            my_bib_utils = glob.glob(os.path.join(spack_root, "mybibutils*"))[0]
+            return os.path.join(my_bib_utils, "share", filename)
+        except IndexError:
+            print("Could not find MyBIBUtils in spack installation, will try to read threshold files from --code.")
+            return os.path.join(codedir, filename)
 
 MyEcalBarrelSelector = MarlinProcessorWrapper("MyEcalBarrelSelector")
 MyEcalBarrelSelector.OutputLevel = INFO
@@ -650,7 +673,7 @@ MyEcalBarrelSelector.Parameters = {
     "CaloRelationCollectionName": ["EcalBarrelRelationsSimConed"],
     "GoodHitCollection": ["EcalBarrelCollectionSel"],
     "GoodRelationCollection": ["EcalBarrelRelationsSimSel"],
-    "ThresholdsFilePath": [f"{the_args.code}/MyBIBUtils/data/ECAL_Thresholds_10TeV.root"],
+    "ThresholdsFilePath": [findCaloThresholds("MyBIBUtils/data/ECAL_Thresholds_10TeV.root", the_args.code, the_args.useLocalThresholds)],
     "Nsigma": ["0"],
     "TimeWindowMin": ["-0.3"],
     "TimeWindowMax": ["0.3"],
@@ -665,7 +688,7 @@ MyEcalEndcapSelector.Parameters = {
     "CaloRelationCollectionName": ["EcalEndcapRelationsSimConed"],
     "GoodHitCollection": ["EcalEndcapCollectionSel"],
     "GoodRelationCollection": ["EcalEndcapRelationsSimSel"],
-    "ThresholdsFilePath": [f"{the_args.code}/MyBIBUtils/data/ECAL_Thresholds_10TeV.root"],
+    "ThresholdsFilePath": [findCaloThresholds("MyBIBUtils/data/ECAL_Thresholds_10TeV.root", the_args.code, the_args.useLocalThresholds)],
     "Nsigma": ["0"],
     "TimeWindowMin": ["-0.3"],
     "TimeWindowMax": ["0.3"],
@@ -681,7 +704,7 @@ MyHcalBarrelSelector.Parameters = {
     "CaloRelationCollectionName": ["HcalBarrelRelationsSimConed"],
     "GoodHitCollection": ["HcalBarrelCollectionSel"],
     "GoodRelationCollection": ["HcalBarrelRelationsSimSel"],
-    "ThresholdsFilePath": [f"{the_args.code}/MyBIBUtils/data/HCAL_Thresholds_10TeV.root"],
+    "ThresholdsFilePath": [findCaloThresholds("MyBIBUtils/data/HCAL_Thresholds_10TeV.root", the_args.code, the_args.useLocalThresholds)],
     "FlatThreshold": ["5e-05"],
     "Nsigma": ["0"],
     "TimeWindowMin": ["-0.3"],
@@ -697,7 +720,7 @@ MyHcalEndcapSelector.Parameters = {
     "CaloRelationCollectionName": ["HcalEndcapRelationsSimConed"],
     "GoodHitCollection": ["HcalEndcapCollectionSel"],
     "GoodRelationCollection": ["HcalEndcapRelationsSimSel"],
-    "ThresholdsFilePath": [f"{the_args.code}/MyBIBUtils/data/HCAL_Thresholds_10TeV.root"],
+    "ThresholdsFilePath": [findCaloThresholds("MyBIBUtils/data/HCAL_Thresholds_10TeV.root", the_args.code, the_args.useLocalThresholds)],
     "FlatThreshold": ["5e-05"],
     "Nsigma": ["0"],
     "TimeWindowMin": ["-0.3"],
@@ -705,6 +728,21 @@ MyHcalEndcapSelector.Parameters = {
     "DoBIBsubtraction": ["false"]
 }
 
+def updatePandoraPaths(pandoraSettings, codedir):
+    """ Helper function to update XML paths in a PandoraSettings XML file.
+        Pandora itself doesn't seem to be able to do anything like this, which means that
+        absolute paths need to be specified."""
+    newpath = os.path.join(os.path.dirname(pandoraSettings), "temp_" + os.path.basename(pandoraSettings))
+    with open(pandoraSettings) as settingsFile:
+        text = settingsFile.read()
+    newtext = text.replace("/code", codedir)
+    with open(newpath, 'w') as newSettings:
+        newSettings.write(newtext)
+
+    return newpath
+
+pandoraSettingsFile = updatePandoraPaths(f"{the_args.code}/SteeringMacros/PandoraSettings/PandoraSettingsDefault.xml", the_args.code)
+print("Running using temporary PandoraSettings XML: " + pandoraSettingsFile)
 
 DDMarlinPandora = MarlinProcessorWrapper("DDMarlinPandora")
 DDMarlinPandora.OutputLevel = INFO
@@ -776,7 +814,7 @@ DDMarlinPandora.Parameters = {
     "NEventsToSkip": ["0"],
     "NOuterSamplingLayers": ["3"],
     "PFOCollectionName": ["PandoraPFOs"],
-    "PandoraSettingsXmlFile": [f"{the_args.code}/SteeringMacros/PandoraSettings/PandoraSettingsDefault.xml"],
+    "PandoraSettingsXmlFile": [pandoraSettingsFile],
     "ProngVertexCollections": ["ProngVertices"],
     "ReachesECalBarrelTrackerOuterDistance": ["-100"],
     "ReachesECalBarrelTrackerZMaxDistance": ["-50"],
