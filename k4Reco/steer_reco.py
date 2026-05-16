@@ -69,13 +69,20 @@ else:
             "LCRelation"
         ],
         "DropCollectionNames": [
-            f"IBTrackerHits{Coned}", f"IETrackerHits{Coned}",
-            f"OBTrackerHits{Coned}", f"OETrackerHits{Coned}",
-            f"VBTrackerHits{Coned}", f"VETrackerHits{Coned}",
-            f"VBTrackerHitsRelations{Coned}", f"VETrackerHitsRelations{Coned}",
-            f"IBTrackerHitsRelations{Coned}", f"IETrackerHitsRelations{Coned}",
-            f"OBTrackerHitsRelations{Coned}", f"OETrackerHitsRelations{Coned}",
-            f"VertexBarrelCollection{Coned}", f"VertexEndcapCollection{Coned}",
+            f"VBTrackerHits{Coned}",
+            f"VETrackerHits{Coned}",
+            # f"IBTrackerHits{Coned}",
+            f"IETrackerHits{Coned}",
+            # f"OBTrackerHits{Coned}",
+            f"OETrackerHits{Coned}",
+            f"VBTrackerHitsRelations{Coned}",
+            f"VETrackerHitsRelations{Coned}",
+            # f"IBTrackerHitsRelations{Coned}",
+            f"IETrackerHitsRelations{Coned}",
+            # f"OBTrackerHitsRelations{Coned}",
+            f"OETrackerHitsRelations{Coned}",
+            f"VertexBarrelCollection{Coned}",
+            f"VertexEndcapCollection{Coned}",
             f"InnerTrackerEndcapCollection{Coned}",
             f"OuterTrackerEndcapCollection{Coned}",
             "AllTracks", "SeedTracks", "SiTracks",
@@ -84,12 +91,12 @@ else:
         "FullSubsetCollections": [
             "EcalBarrelCollectionSel", "EcalEndcapCollectionSel",
             "HcalBarrelCollectionSel", "HcalEndcapCollectionSel",
-            # f"IBTrackerHits{Coned}", f"IETrackerHits{Coned}",
-            # f"OBTrackerHits{Coned}", f"OETrackerHits{Coned}",
             # f"VBTrackerHits{Coned}", f"VETrackerHits{Coned}",
+            f"IBTrackerHits{Coned}", # f"IETrackerHits{Coned}",
+            f"OBTrackerHits{Coned}", # f"OETrackerHits{Coned}",
             # f"VBTrackerHitsRelations{Coned}", f"VETrackerHitsRelations{Coned}",
-            # f"IBTrackerHitsRelations{Coned}", f"IETrackerHitsRelations{Coned}",
-            # f"OBTrackerHitsRelations{Coned}", f"OETrackerHitsRelations{Coned}",
+            f"IBTrackerHitsRelations{Coned}", # f"IETrackerHitsRelations{Coned}",
+            f"OBTrackerHitsRelations{Coned}", # f"OETrackerHitsRelations{Coned}",
             # f"VertexBarrelCollection{Coned}", f"VertexEndcapCollection{Coned}",
             f"InnerTrackerBarrelCollection{Coned}", # f"InnerTrackerEndcapCollection{Coned}",
             f"OuterTrackerBarrelCollection{Coned}", # f"OuterTrackerEndcapCollection{Coned}",
@@ -98,12 +105,12 @@ else:
         "KeepCollectionNames": [
             "EcalBarrelCollectionSel", "EcalEndcapCollectionSel",
             "HcalBarrelCollectionSel", "HcalEndcapCollectionSel",
-            # f"IBTrackerHits{Coned}", f"IETrackerHits{Coned}",
-            # f"OBTrackerHits{Coned}", f"OETrackerHits{Coned}",
             # f"VBTrackerHits{Coned}", f"VETrackerHits{Coned}",
+            f"IBTrackerHits{Coned}", # f"IETrackerHits{Coned}",
+            f"OBTrackerHits{Coned}", # f"OETrackerHits{Coned}",
             # f"VBTrackerHitsRelations{Coned}", f"VETrackerHitsRelations{Coned}",
-            # f"IBTrackerHitsRelations{Coned}", f"IETrackerHitsRelations{Coned}",
-            # f"OBTrackerHitsRelations{Coned}", f"OETrackerHitsRelations{Coned}",
+            f"IBTrackerHitsRelations{Coned}", # f"IETrackerHitsRelations{Coned}",
+            f"OBTrackerHitsRelations{Coned}", # f"OETrackerHitsRelations{Coned}",
             # f"VertexBarrelCollection{Coned}", f"VertexEndcapCollection{Coned}",
             f"InnerTrackerBarrelCollection{Coned}", # f"InnerTrackerEndcapCollection{Coned}",
             f"OuterTrackerBarrelCollection{Coned}", # f"OuterTrackerEndcapCollection{Coned}",
@@ -165,16 +172,16 @@ InnerPlanarDigiProcessor.ProcessorType = "DDPlanarDigiProcessor"
 InnerPlanarDigiProcessor.Parameters = {
     "CorrectTimesForPropagation": ["true"],
     "IsStrip": ["false"],
-    "ResolutionT": ["0.06"],
-    "ResolutionU": ["0.007"],
-    "ResolutionV": ["0.090"],
+    "ResolutionT": ["0.0"],
+    "ResolutionU": ["0.005"],
+    "ResolutionV": ["0.005"],
     "SimTrackHitCollectionName": ["InnerTrackerBarrelCollection"],
     "SimTrkHitRelCollection": ["IBTrackerHitsRelations"],
     "SubDetectorName": ["InnerTrackers"],
     "TimeWindowMax": ["0.3"],
     "TimeWindowMin": ["-0.18"],
     "TrackerHitCollectionName": ["IBTrackerHits"],
-    "UseTimeWindow": ["true"]
+    "UseTimeWindow": ["false"]
 }
 
 InnerEndcapPlanarDigiProcessor = MarlinProcessorWrapper(
@@ -184,16 +191,16 @@ InnerEndcapPlanarDigiProcessor.ProcessorType = "DDPlanarDigiProcessor"
 InnerEndcapPlanarDigiProcessor.Parameters = {
     "CorrectTimesForPropagation": ["true"],
     "IsStrip": ["false"],
-    "ResolutionT": ["0.06"],
-    "ResolutionU": ["0.007"],
-    "ResolutionV": ["0.090"],
+    "ResolutionT": ["0.0"],
+    "ResolutionU": ["0.005"],
+    "ResolutionV": ["0.005"],
     "SimTrackHitCollectionName": ["InnerTrackerEndcapCollection"],
     "SimTrkHitRelCollection": ["IETrackerHitsRelations"],
     "SubDetectorName": ["InnerTrackers"],
     "TimeWindowMax": ["0.3"],
     "TimeWindowMin": ["-0.18"],
     "TrackerHitCollectionName": ["IETrackerHits"],
-    "UseTimeWindow": ["true"]
+    "UseTimeWindow": ["false"]
 }
 
 OuterPlanarDigiProcessor = MarlinProcessorWrapper("OuterPlanarDigiProcessor")
@@ -202,16 +209,16 @@ OuterPlanarDigiProcessor.ProcessorType = "DDPlanarDigiProcessor"
 OuterPlanarDigiProcessor.Parameters = {
     "CorrectTimesForPropagation": ["true"],
     "IsStrip": ["false"],
-    "ResolutionT": ["0.06"],
-    "ResolutionU": ["0.007"],
-    "ResolutionV": ["0.090"],
+    "ResolutionT": ["0.0"],
+    "ResolutionU": ["0.005"],
+    "ResolutionV": ["0.005"],
     "SimTrackHitCollectionName": ["OuterTrackerBarrelCollection"],
     "SimTrkHitRelCollection": ["OBTrackerHitsRelations"],
     "SubDetectorName": ["OuterTrackers"],
     "TimeWindowMax": ["0.3"],
     "TimeWindowMin": ["-0.18"],
     "TrackerHitCollectionName": ["OBTrackerHits"],
-    "UseTimeWindow": ["true"]
+    "UseTimeWindow": ["false"]
 }
 
 OuterEndcapPlanarDigiProcessor = MarlinProcessorWrapper(
@@ -221,16 +228,16 @@ OuterEndcapPlanarDigiProcessor.ProcessorType = "DDPlanarDigiProcessor"
 OuterEndcapPlanarDigiProcessor.Parameters = {
     "CorrectTimesForPropagation": ["true"],
     "IsStrip": ["false"],
-    "ResolutionT": ["0.06"],
-    "ResolutionU": ["0.007"],
-    "ResolutionV": ["0.090"],
+    "ResolutionT": ["0.0"],
+    "ResolutionU": ["0.005"],
+    "ResolutionV": ["0.005"],
     "SimTrackHitCollectionName": ["OuterTrackerEndcapCollection"],
     "SimTrkHitRelCollection": ["OETrackerHitsRelations"],
     "SubDetectorName": ["OuterTrackers"],
     "TimeWindowMax": ["0.3"],
     "TimeWindowMin": ["-0.18"],
     "TrackerHitCollectionName": ["OETrackerHits"],
-    "UseTimeWindow": ["true"]
+    "UseTimeWindow": ["false"]
 }
 
 VXDBarrelConer = MarlinProcessorWrapper("VXDBarrelConer")
