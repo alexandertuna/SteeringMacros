@@ -141,7 +141,8 @@ VXDBarrelDigitiser.Parameters = {
     "TimeWindowMax": ["0.15"],
     "TimeWindowMin": ["-0.09"],
     "TrackerHitCollectionName": ["VBTrackerHits"],
-    "UseTimeWindow": ["true"]
+    "UseTimeWindow": ["true"],
+    "ForceHitsOntoSurface": ["true"]
 }
 
 VXDEndcapDigitiser = MarlinProcessorWrapper("VXDEndcapDigitiser")
@@ -159,7 +160,8 @@ VXDEndcapDigitiser.Parameters = {
     "TimeWindowMax": ["0.15"],
     "TimeWindowMin": ["-0.09"],
     "TrackerHitCollectionName": ["VETrackerHits"],
-    "UseTimeWindow": ["true"]
+    "UseTimeWindow": ["true"],
+    "ForceHitsOntoSurface": ["true"]
 }
 
 InnerPlanarDigiProcessor = MarlinProcessorWrapper("InnerPlanarDigiProcessor")
@@ -177,7 +179,8 @@ InnerPlanarDigiProcessor.Parameters = {
     "TimeWindowMax": ["0.3"],
     "TimeWindowMin": ["-0.18"],
     "TrackerHitCollectionName": ["IBTrackerHits"],
-    "UseTimeWindow": ["true"]
+    "UseTimeWindow": ["true"],
+    "ForceHitsOntoSurface": ["true"]
 }
 
 InnerEndcapPlanarDigiProcessor = MarlinProcessorWrapper(
@@ -196,7 +199,8 @@ InnerEndcapPlanarDigiProcessor.Parameters = {
     "TimeWindowMax": ["0.3"],
     "TimeWindowMin": ["-0.18"],
     "TrackerHitCollectionName": ["IETrackerHits"],
-    "UseTimeWindow": ["true"]
+    "UseTimeWindow": ["true"],
+    "ForceHitsOntoSurface": ["true"]
 }
 
 OuterPlanarDigiProcessor = MarlinProcessorWrapper("OuterPlanarDigiProcessor")
@@ -214,7 +218,8 @@ OuterPlanarDigiProcessor.Parameters = {
     "TimeWindowMax": ["0.3"],
     "TimeWindowMin": ["-0.18"],
     "TrackerHitCollectionName": ["OBTrackerHits"],
-    "UseTimeWindow": ["true"]
+    "UseTimeWindow": ["true"],
+    "ForceHitsOntoSurface": ["true"]
 }
 
 OuterEndcapPlanarDigiProcessor = MarlinProcessorWrapper(
@@ -233,7 +238,8 @@ OuterEndcapPlanarDigiProcessor.Parameters = {
     "TimeWindowMax": ["0.3"],
     "TimeWindowMin": ["-0.18"],
     "TrackerHitCollectionName": ["OETrackerHits"],
-    "UseTimeWindow": ["true"]
+    "UseTimeWindow": ["true"],
+    "ForceHitsOntoSurface": ["true"]
 }
 
 VXDBarrelConer = MarlinProcessorWrapper("VXDBarrelConer")
