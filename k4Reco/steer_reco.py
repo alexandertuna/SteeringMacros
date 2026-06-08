@@ -139,10 +139,10 @@ VXDBarrelDigitiser.Parameters = {
     "SimTrackHitCollectionName": ["VertexBarrelCollection"],
     "SimTrkHitRelCollection": ["VBTrackerHitsRelations"],
     "SubDetectorName": ["Vertex"],
-    "TimeWindowMax": ["0.15"],
-    "TimeWindowMin": ["-0.09"],
+    "TimeWindowMax": ["15.0"],
+    "TimeWindowMin": ["-5.0"],
     "TrackerHitCollectionName": ["VBTrackerHits"],
-    "UseTimeWindow": ["false"],
+    "UseTimeWindow": ["true"],
     "ForceHitsOntoSurface": ["true"]
 }
 
@@ -158,10 +158,10 @@ VXDEndcapDigitiser.Parameters = {
     "SimTrackHitCollectionName": ["VertexEndcapCollection"],
     "SimTrkHitRelCollection": ["VETrackerHitsRelations"],
     "SubDetectorName": ["Vertex"],
-    "TimeWindowMax": ["0.15"],
-    "TimeWindowMin": ["-0.09"],
+    "TimeWindowMax": ["15.0"],
+    "TimeWindowMin": ["-5.0"],
     "TrackerHitCollectionName": ["VETrackerHits"],
-    "UseTimeWindow": ["false"],
+    "UseTimeWindow": ["true"],
     "ForceHitsOntoSurface": ["true"]
 }
 
@@ -177,10 +177,10 @@ InnerPlanarDigiProcessor.Parameters = {
     "SimTrackHitCollectionName": ["InnerTrackerBarrelCollection"],
     "SimTrkHitRelCollection": ["IBTrackerHitsRelations"],
     "SubDetectorName": ["InnerTrackers"],
-    "TimeWindowMax": ["0.3"],
-    "TimeWindowMin": ["-0.18"],
+    "TimeWindowMax": ["15.0"],
+    "TimeWindowMin": ["-5.0"],
     "TrackerHitCollectionName": ["IBTrackerHits"],
-    "UseTimeWindow": ["false"],
+    "UseTimeWindow": ["true"],
     "ForceHitsOntoSurface": ["true"]
 }
 
@@ -197,10 +197,10 @@ InnerEndcapPlanarDigiProcessor.Parameters = {
     "SimTrackHitCollectionName": ["InnerTrackerEndcapCollection"],
     "SimTrkHitRelCollection": ["IETrackerHitsRelations"],
     "SubDetectorName": ["InnerTrackers"],
-    "TimeWindowMax": ["0.3"],
-    "TimeWindowMin": ["-0.18"],
+    "TimeWindowMax": ["15.0"],
+    "TimeWindowMin": ["-5.0"],
     "TrackerHitCollectionName": ["IETrackerHits"],
-    "UseTimeWindow": ["false"],
+    "UseTimeWindow": ["true"],
     "ForceHitsOntoSurface": ["true"]
 }
 
@@ -216,10 +216,10 @@ OuterPlanarDigiProcessor.Parameters = {
     "SimTrackHitCollectionName": ["OuterTrackerBarrelCollection"],
     "SimTrkHitRelCollection": ["OBTrackerHitsRelations"],
     "SubDetectorName": ["OuterTrackers"],
-    "TimeWindowMax": ["0.3"],
-    "TimeWindowMin": ["-0.18"],
+    "TimeWindowMax": ["15.0"],
+    "TimeWindowMin": ["-5.0"],
     "TrackerHitCollectionName": ["OBTrackerHits"],
-    "UseTimeWindow": ["false"],
+    "UseTimeWindow": ["true"],
     "ForceHitsOntoSurface": ["true"]
 }
 
@@ -236,10 +236,10 @@ OuterEndcapPlanarDigiProcessor.Parameters = {
     "SimTrackHitCollectionName": ["OuterTrackerEndcapCollection"],
     "SimTrkHitRelCollection": ["OETrackerHitsRelations"],
     "SubDetectorName": ["OuterTrackers"],
-    "TimeWindowMax": ["0.3"],
-    "TimeWindowMin": ["-0.18"],
+    "TimeWindowMax": ["15.0"],
+    "TimeWindowMin": ["-5.0"],
     "TrackerHitCollectionName": ["OETrackerHits"],
-    "UseTimeWindow": ["false"],
+    "UseTimeWindow": ["true"],
     "ForceHitsOntoSurface": ["true"]
 }
 
